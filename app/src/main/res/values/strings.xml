@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BroadcastReceiverTask</string>
+    <string name="receiver_permission_description">Allow to get access to BroadcastReceiver from BroadcastReceiverTask</string>
+</resources>

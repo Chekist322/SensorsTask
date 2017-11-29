@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.batrakov.broadcastreceivertask">
+
+    <permission
+        android:name="com.example.batrakov.broadcastreceivertask.RECEIVER"
+        android:description="@string/receiver_permission_description"
+        android:label="Receiver access"
+        android:protectionLevel="normal"/>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".StarterReceiver"
+            android:exported="true"
+            android:permission="com.example.batrakov.broadcastreceivertask.RECEIVER">
+            <intent-filter>
+                <action android:name="com.example.batrakov.broadcastreceivertask.START_ACTION"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".SensorsListenerService"
+                 android:exported="true"
+                 android:process=":serviceProcess">
+
+        </service>
+    </application>
+
+</manifest>
