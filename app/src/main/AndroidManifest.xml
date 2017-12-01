@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.batrakov.broadcastreceivertask">
+          package="com.example.batrakov.LyingDetector">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <permission
-        android:name="com.example.batrakov.broadcastreceivertask.RECEIVER"
+        android:name="com.example.batrakov.LyingDetector.RECEIVER"
         android:description="@string/receiver_permission_description"
         android:label="Receiver access"
         android:protectionLevel="normal"/>
@@ -28,6 +30,8 @@
         <service android:name=".NotificationJobService"
                  android:permission="android.permission.BIND_JOB_SERVICE"
                  android:exported="true"/>
+
+        <service android:name=".SensorService"/>
 
     </application>
 
