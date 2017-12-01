@@ -68,7 +68,7 @@ public class NotificationJobService extends JobService implements SensorEventLis
             mSensorManager.unregisterListener(this);
 
             int lyingCounter;
-            if (isLying(event.values[0], event.values[1], event.values[2])) {
+            if (isLying(Math.abs(event.values[0]), Math.abs(event.values[1]), Math.abs(event.values[2]))) {
 
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                 lyingCounter = sharedPref.getInt(getString(R.string.lying_counter), 0);
