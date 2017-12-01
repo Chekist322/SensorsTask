@@ -25,20 +25,10 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".StarterReceiver"
-            android:exported="true"
-            android:permission="com.example.batrakov.broadcastreceivertask.RECEIVER">
-            <intent-filter>
-                <action android:name="com.example.batrakov.broadcastreceivertask.START_ACTION"/>
-            </intent-filter>
-        </receiver>
+        <service android:name=".NotificationJobService"
+                 android:permission="android.permission.BIND_JOB_SERVICE"
+                 android:exported="true"/>
 
-        <service android:name=".SensorsListenerService"
-                 android:exported="true"
-                 android:process=":serviceProcess">
-
-        </service>
     </application>
 
 </manifest>
