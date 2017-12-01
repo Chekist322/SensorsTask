@@ -1,7 +1,5 @@
 package com.example.batrakov.LyingDetector;
 
-import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
@@ -19,6 +17,10 @@ import android.support.v4.app.NotificationCompat;
  * Created by batrakov on 01.12.17.
  */
 public class SensorService extends Service implements SensorEventListener {
+
+    private static final int WAKE_LOCK_TIMER = 5000;
+    private static final long BORDER_FOR_LAST_SENSOR_CHANGE = 3000000000L;
+    private static final int AMOUNT_OF_LYING_CHECK_FOR_TRIGGER_NOTIFICATION = 4;
 
     private long mTimeToStop;
     private PowerManager.WakeLock mWakeLock;
@@ -54,7 +56,7 @@ public class SensorService extends Service implements SensorEventListener {
         if (powerManager != null) {
             mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
                     "MyWakelockTag");
-            mWakeLock.acquire(5000);
+            mWakeLock.acquire(WAKE_LOCK_TIMER);
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -68,7 +70,7 @@ public class SensorService extends Service implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (mTimeToStop == 0) {
-            mTimeToStop = event.timestamp + 3000000000L;
+            mTimeToStop = event.timestamp + BORDER_FOR_LAST_SENSOR_CHANGE;
         }
         if (mNeedToAnalyze) {
             if (event.timestamp < mTimeToStop) {
@@ -83,9 +85,9 @@ public class SensorService extends Service implements SensorEventListener {
                     if (isLying()) {
                         mMovingCounter++;
                         System.out.println(mMovingCounter);
-                        if (mMovingCounter >= 4) {
+                        if (mMovingCounter >= AMOUNT_OF_LYING_CHECK_FOR_TRIGGER_NOTIFICATION) {
                             NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), "Test channel");
-                            builder.setContentTitle("Receiver notification")
+                            builder.setContentTitle("SensorService")
                                     .setPriority(NotificationCompat.PRIORITY_MAX)
                                     .setDefaults(NotificationCompat.DEFAULT_ALL)
                                     .setContentText("MOVE!")
